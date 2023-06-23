@@ -1,0 +1,64 @@
+﻿@model Calculator.Models.Calc
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <style>
+        .button-container {
+            padding-top: 10px;
+        }
+    </style>
+    <script>
+        function clearForm() {
+            document.getElementById("number1").value = "";
+            document.getElementById("number2").value = "";
+            document.getElementById("total").value = "";
+        }
+
+        function validateForm() {
+            var number1 = parseFloat(document.getElementById("number1").value);
+            var number2 = parseFloat(document.getElementById("number2").value);
+
+            if (isNaN(number1) || isNaN(number2)) {
+                toastr.error("Both inputs must be valid integers.");
+                return false;
+            }
+
+            return true;
+        }
+
+    </script>
+</head>
+
+<body>
+    <h2>Shannon's Calculator</h2>
+
+    <div class="row">
+        @using (Html.BeginForm("Index", "Calc", FormMethod.Post, new { onsubmit = "return validateForm();" }))
+        {
+            <div class="form-group col-md-4">
+                <label for="number1">Enter first number:</label>
+                <input type="text" class="form-control" id="number1" name="number1" value="@Model.Number1" />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="number2">Enter second number:</label>
+                <input type="text" class="form-control" id="number2" name="number2" value="@Model.Number2" />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="total">Total</label>
+                <input type="text" class="form-control" id="total" name="total" value="@Model.Total" />
+            </div>
+            <div class="col-md-12 button-container">
+                <button type="submit" class="btn btn-info" id="add" value="add" name="calculate">+</button>
+                <button type="submit" class="btn btn-danger" id="sub" value="sub" name="calculate">-</button>
+                <button type="submit" class="btn btn-warning" id="mult" value="mult" name="calculate">*</button>
+                <button type="submit" class="btn btn-primary" id="div" value="div" name="calculate">/</button>
+                <button type="button" class="btn btn-danger" id="reset" value="reset" name="reset" onclick="clearForm()">Clear</button>
+            </div>
+        }
+    </div>
+</body>
+</html>
+
